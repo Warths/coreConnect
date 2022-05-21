@@ -1,0 +1,17 @@
+{
+    "name": "warths/core-connect",
+    "description": "Core project for connections / api",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Warths",
+            "email": "pro.warths@gmail.com"
+        }
+    ],
+    "require": {}
+}
