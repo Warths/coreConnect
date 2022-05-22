@@ -14,24 +14,16 @@ class CoreConnect {
         $this->env = new Environment();
 
         // Configuring logging.
-        $this->logger = new Logger("Logger");
+        $this->logger = new Logger("Core");
+        
 
 
     }
 
     function serve() {
         // STARTING SERVING CLIENT
-        
-        $client = $_SERVER["REMOTE_ADDR"] . ":" . $_SERVER["REMOTE_PORT"];
-        $this->logger->discrete(
-            "Received request from " . $client
-        );
-
         $request = new Request();
         // END SERVING CLIENT 
-        $this->logger->discrete(
-            "Served ".$client." in ".$request->serveTime(). "ms."
-        );
     }
 }
 
