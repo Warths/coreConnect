@@ -13,11 +13,13 @@ class CoreConnect {
         $this->env = new Environment();
 
         // Configuring logging.
-        $this->logger1 = new Logger("Logger 1");
-        $this->logger2 = new Logger("Logger 2");
-        $this->logger1->log("Bonjour");
-        $this->logger2->log("ORVOUAR");
-        
+        $this->logger = new Logger("Logger");
+        $this->logger->discrete("Bonjour");
+        $this->logger->debug("Bonjour");
+        $this->logger->info("Bonjour");
+        $this->logger->warning("Bonjour");
+        $this->logger->error("Bonjour");
+
 
     }
 
