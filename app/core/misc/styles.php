@@ -2,8 +2,8 @@
 
 namespace App\Core\Misc;
 
-class Colors {
-    public const NORMAL        = "\e[39m";
+class Styles {
+    public const DEFAULT       = "\e[39m";
     public const BLACK         = "\e[30m";
     public const RED           = "\e[31m";
     public const GREEN         = "\e[32m";
@@ -20,4 +20,14 @@ class Colors {
     public const LIGHT_MAGENTA = "\e[95m";
     public const LIGHT_CYAN    = "\e[96m";
     public const WHITE         = "\e[97m";
+    public const NORMAL        = "\e[0m";
+    public const BOLD          = "\e[1m";
+    public const DIM           = "\e[2m";
+    public const ITALIC        = "\e[3m";
+    public const UNDERLINED    = "\e[4m";
+    public const BLINKING      = "\e[5m";
+    public const REVERSE       = "\e[6m";
+    public const INVISIBLE     = "\e[7m";
+
+
 }
