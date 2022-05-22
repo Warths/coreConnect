@@ -4,6 +4,7 @@ namespace App\Core;
 
 use App\Core\Environment;
 use App\Core\Logger;
+use App\Core\Request;
 
 class CoreConnect {
     private $env;
@@ -14,17 +15,23 @@ class CoreConnect {
 
         // Configuring logging.
         $this->logger = new Logger("Logger");
-        $this->logger->discrete("Bonjour");
-        $this->logger->debug("Bonjour");
-        $this->logger->info("Bonjour");
-        $this->logger->warning("Bonjour");
-        $this->logger->error("Bonjour");
 
 
     }
 
     function serve() {
-        // SOME MAGIC HAPPENS HERE
+        // STARTING SERVING CLIENT
+        
+        $client = $_SERVER["REMOTE_ADDR"] . ":" . $_SERVER["REMOTE_PORT"];
+        $this->logger->discrete(
+            "Received request from " . $client
+        );
+
+        $request = new Request();
+        // END SERVING CLIENT 
+        $this->logger->discrete(
+            "Served ".$client." in ".$request->serveTime(). "ms."
+        );
     }
 }
 
