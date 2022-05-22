@@ -1,0 +1,13 @@
+<?php
+
+$filepath = __DIR__."/../tmp/latest.log";
+$handle = popen("tail -f ".$filepath." 2>&1", 'r');
+set_error_handler(fn() => null);
+while(!feof($handle)) {
+    $buffer = fgets($handle);
+    echo "\e$buffer";
+    ob_flush();
+    flush();
+}
+restore_error_handler();
+pclose($handle);
