@@ -7,7 +7,7 @@ use App\Core\Misc\Styles;
 class Logger {
 
     static private $level = 0;
-    static private $format = "[%time%] - %message%";
+    static private $format = "[%time%] - [%name%] - %message%";
     static private $logDir = __DIR__."/../../log/";
     static private $tmpDir = __DIR__."/../../tmp/";
     static private $fileName = "%date%.log";
