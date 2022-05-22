@@ -2,12 +2,15 @@
 
 namespace App\Core;
 
+use App\Core\Misc\Colors;
+
 class Logger {
 
 
     static private $level = 0;
     static private $format = "[%time%] %name% %message%";
-    static private $dirname = __DIR__."/../../log/";
+    static private $logDir = __DIR__."/../../log/";
+    static private $tmpDir = __DIR__."/../../tmp/";
     static private $filename = "%date%.log";
     public $name;
 
@@ -15,18 +18,18 @@ class Logger {
         $this->name = $name;
     }
 
-    static public function configure($level=null,$format=null,$dirname=null,$filename=null) {
+    static public function configure($level=null,$format=null,$logDir=null,$filename=null) {
         if ($level != null) {
             self::setLevel($level);
         }
         if ($format != null) {
             self::setLevel($format);
         }
-        if ($dirname != null) {
-            self::setLevel($dirname);
+        if ($logDir != null) {
+            self::setLevel($logDir);
         }
-        if ($dirname != null) {
-            self::setLevel($dirname);
+        if ($logDir != null) {
+            self::setLevel($logDir);
         }
 
     }
@@ -47,12 +50,12 @@ class Logger {
         self::$format = $format;
     }
 
-    static public function getDirName() {
-        return self::$dirname;
+    static public function getlogDir() {
+        return self::$logDir;
     }
 
-    static public function setDirName($dirname) {
-        self::$dirname = realpath($dirname);
+    static public function setlogDir($logDir) {
+        self::$logDir = realpath($logDir);
     }
 
     static public function getFileName() {
@@ -68,20 +71,33 @@ class Logger {
         return [
             "level"=>self::$level,
             "format"=>self::$format,
-            "dirname"=>self::$dirname,
+            "logDir"=>self::$logDir,
             "filename"=>self::$filename
         ];
     }
 
-    public function log($message) {
-        self::check_dir();
-        file_put_contents(self::$dirname.self::$filename, $message."\n", FILE_APPEND);
+    static public function log_to_file($path, $message) {
+        self::check_dir(dirname($path));
+        file_put_contents($path, $message."\n", FILE_APPEND);
     }
 
-    static private function check_dir() {
-        if (!file_exists(self::$dirname)) {
-            mkdir(self::$dirname);
+    static private function check_dir($name) {
+        if (!file_exists($name)) {
+            mkdir($name);
         }
+    }
+
+    static private function logPath() {
+        return self::$logDir.self::$filename;
+    }
+
+    static private function tmpLogPath() {
+        return self::$tmpDir."latest.log";
+    }
+
+    public function info($message) {
+        self::log_to_file(self::logPath(), "[".$this->name."] ".$message);
+        self::log_to_file(self::tmpLogPath(), Colors::RED." [".$this->name."] ".$message." ".Colors::NORMAL);
     }
 
 }
