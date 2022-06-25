@@ -2,6 +2,4 @@
 
 namespace App\Core\Exceptions;
 
-
-
-class EnvironmentNotFountException extends \Exception {}
+class EnvironmentNotFoundException extends \Exception {}

@@ -1,10 +1,8 @@
 <?php
 
-
-
 namespace App\Core;
 
-use App\Core\Exceptions\EnvironmentNotFountException;
+use App\Core\Exceptions\EnvironmentNotFoundException;
 
 // ENVIRONMENT SINGLETON 
 class Environment {
@@ -12,10 +10,9 @@ class Environment {
     function __construct(private $path="/../../.env") {}
 
     function load() {
-
         // Getting and spliting config file
         set_error_handler(function() {
-            throw new EnvironmentNotFountException(
+            throw new EnvironmentNotFoundException(
                 'Could not find env file (looking at "'.__DIR__.$this->path.'")'
             );
         });
@@ -27,14 +24,10 @@ class Environment {
 
         foreach($env as $line) {
             // Sanityzing lines 
-            if (strlen($line) == 0 || str_starts_with($line, "#") || !str_contains($line, "=")) {
+            if (strlen($line) == 0 || str_starts_with($line, "#") || !str_contains($line, "="))
                 continue;
-            }
 
-            /*
-             * Adding to env
-             * 
-             */
+            /** Adding to env **/
 
             // Sanityzing values
             $tuple = explode("=", $line, 2);
