@@ -10,4 +10,8 @@ class Model extends Database {
     function byId($id) {
         return $this->fetch("SELECT * FROM $this->table WHERE id = ?", [$id]);
     }
+
+    function all() {
+        return $this->fetchAll("SELECT * FROM $this->table");
+    }
 }
