@@ -6,20 +6,42 @@ use App\Core\Route;
 use App\Core\Response\HttpResponse;
 use App\Core\Response\JsonResponse;
 use App\Core\Response\Generics;
+use App\Core\Logger;
 
 class Router {
     static $instance = null;
     private $routes = [];
 
+    function __construct()
+    {
+        $this->logger = new Logger("Routing");
+    }
+
+    private function logBuffer($buffer) {
+        $bufferLength = strlen($buffer);
+        if ($bufferLength > 0) 
+        {   
+            $this->logger->warning("Produced $bufferLength unwanted character(s)");
+            $this->logger->warning($buffer);
+        }
+    }
+
     public function serve() {
         $rest_only = isset($_ENV["REST_ONLY"]) && $_ENV["REST_ONLY"] == "1";
+
+
 
         foreach($this->routes as $route) {
             $params = $route->match();
             if (gettype($params) == "array") {
+
+                ob_start();
                 $response = call_user_func($route->callable, $params);
+                $this->logBuffer(ob_get_clean());
+
                 if (is_a($response, HttpResponse::class)) {
                     $response->render();
+
                     return;
                 }
                 
