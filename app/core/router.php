@@ -11,11 +11,13 @@ class Router {
     public function serve() {
         foreach($this->routes as $route) {
             $params = $route->match();
-            var_dump($params);
             if ($params) {
-                echo "Ca match !";
-            } else {
-                echo "ca match po";
+                // SERVE
+                call_user_func($route->callable, [$params]);
+            }
+            
+            if (isset($_ENV["REST_ONLY"]) && $_ENV["REST_ONLY"] == "1") {
+                
             }
         } 
     }

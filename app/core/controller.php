@@ -6,8 +6,9 @@ use App\Core\Router;
 
 
 class Controller {
-    static function describe($route, $callable) {
+    static function describe($route, $function_name) {
         $router = Router::getRouter();
-        $router->addRoute($route, $callable);
+        $instance = new static();
+        $router->addRoute($route, [$instance, $function_name]);
     }
 }
