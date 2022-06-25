@@ -10,18 +10,18 @@ class Database {
         $this->db = new \PDO("mysql:host=$host;dbname=$name", $user, $pass);
     }
 
-    function query($sql, $options) {
+    function query($sql, $options=[]) {
         $stm = $this->db->prepare($sql,);
         $stm->execute($options);
         return $stm;
     }
 
-    function fetch($sql, $options, $mode=\PDO::FETCH_ASSOC) {
+    function fetch($sql, $options=[], $mode=\PDO::FETCH_ASSOC) {
         $stm = $this->query($sql, $options);
         return $stm->fetch($mode);
     }
 
-    function fetchAll($sql, $options, $mode=\PDO::FETCH_ASSOC) {
+    function fetchAll($sql, $options=[], $mode=\PDO::FETCH_ASSOC) {
         $stm = $this->query($sql, $options);
         return $stm->fetchAll($mode);
     }
