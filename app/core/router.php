@@ -61,6 +61,7 @@ class Router {
     public function addRoute($pattern, $callable, $methods) {
         $route = new Route($pattern, $callable, $methods);
         $this->routes[] = $route;
+        return $route;
     }
 
     static function getRouter() {
