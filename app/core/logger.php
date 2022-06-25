@@ -128,6 +128,9 @@ class Logger {
     }
 
     private function formatMessage($message, $mode) {
+        if (gettype($message) == "array") {
+            $message = json_encode($message);
+        }
         $message = str_replace('%message%', $message, self::$format);
         $message = str_replace('%date%', "Current_Date", $message);
         $message = str_replace("%mode%", $mode, $message);
