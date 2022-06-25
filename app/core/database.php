@@ -11,7 +11,9 @@ class Database {
     }
 
     function query($sql, $options) {
-        return $this->db->prepare($sql, $options);
+        $stm = $this->db->prepare($sql,);
+        $stm->execute($options);
+        return $stm;
     }
 
     function fetch($sql, $options, $mode=\PDO::FETCH_ASSOC) {
