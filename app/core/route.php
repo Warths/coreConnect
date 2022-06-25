@@ -5,17 +5,22 @@ namespace App\Core;
 use App\Core\Logger;
 
 class Route {
-    function __construct($pattern, $callable) {
+    function __construct($pattern, $callable, $methods) {
         $this->pattern = $pattern;
         if (substr($this->pattern, -1) != "/") {
             $this->pattern .= "/";
         }
 
+        $this->methods = $methods;
         $this->callable = $callable;
         $this->logger = new Logger($this->pattern);
     }
 
     function match() {
+        if (!in_array($_SERVER["REQUEST_METHOD"], $this->methods)) {
+            return false;
+        }
+
         $client_pattern = self::get_client_pattern();
 
         $rest_params = [];

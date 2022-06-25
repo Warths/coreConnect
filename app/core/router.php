@@ -16,8 +16,8 @@ class Router {
 
         foreach($this->routes as $route) {
             $params = $route->match();
-            if ($params) {
-                $response = call_user_func($route->callable, [$params]);
+            if (gettype($params) == "array") {
+                $response = call_user_func($route->callable, $params);
                 if (is_a($response, HttpResponse::class)) {
                     $response->render();
                     return;
@@ -36,8 +36,8 @@ class Router {
             (new HttpResponse(...Generics::http404))->render();
     }
 
-    public function addRoute($pattern, $callable) {
-        $route = new Route($pattern, $callable);
+    public function addRoute($pattern, $callable, $methods) {
+        $route = new Route($pattern, $callable, $methods);
         $this->routes[] = $route;
     }
 
