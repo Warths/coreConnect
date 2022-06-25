@@ -10,7 +10,7 @@ class JWT {
         $this->token = $token;
     }
 
-    static function encodeJWT($payload, $header = ["alg"=> "HS256", "typ"=> "JWT"]) {
+    static function encode($payload, $header = ["alg"=> "HS256", "typ"=> "JWT"]) {
         $header = base64_encode(json_encode($header));
         $payload = base64_encode(json_encode($payload));
 
@@ -21,13 +21,13 @@ class JWT {
         $signature = base64_encode($signature);
         $signature = str_replace(['+', '/', '='], ['-', '_', ''], $signature);
 
-        return var_dump($header . "." . $payload . "." . $signature);
+        return $header . "." . $payload . "." . $signature;
     }
 
     function validate() {
         $body = $this->get_payload();
         $header = $this->get_header();
-        return $this->encodeJWT($body, $header) == $this->token;
+        return $this->encode($body, $header) == $this->token;
     }
 
     function get_header() {
