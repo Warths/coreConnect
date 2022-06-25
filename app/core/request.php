@@ -2,24 +2,28 @@
 
 namespace App\Core;
 
+use App\Core\Router;
+
 class Request {
     private $logger;
 
     public function __construct() {
         $this->logger = new Logger($this->clientName());
         $this->logger->discrete("Handling Request");
-        
+        $this->route();
+    }
+
+    public function route() {
+        $router = Router::getRouter();
+        $router->serve();
     }
 
     public function __destruct() {
         $this->logger->discrete(
           "Served in ".$this->serveTime(). "ms."
         );
-    }
 
-    public function get($key) {
-        var_dump($_GET);
-    } 
+    }
 
     public function clientName() {
         return $_SERVER["REMOTE_ADDR"] . ":" . $_SERVER["REMOTE_PORT"];
